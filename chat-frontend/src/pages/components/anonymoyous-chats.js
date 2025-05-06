@@ -384,6 +384,12 @@ export default function AnonymousChat({ senderId, receiverId, onLogout }) {
               zIndex: 999,
             }}
           >
+            <input
+              type="text"
+              className="form-control mb-3"
+              placeholder="Search GIFs..."
+              onChange={(e) => fetchGifs(e.target.value)}
+            />
             {gifs.map((gif) => (
               <div
                 key={gif.id}
