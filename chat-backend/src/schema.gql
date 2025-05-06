@@ -1,0 +1,61 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Message {
+  id: Float!
+  sender_id: String!
+  receiver_id: String!
+  content: String!
+  timestamp: DateTime!
+  isRead: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type PersistenceMessage {
+  id: Float!
+  sender_id: String!
+  receiver_id: String!
+  content: String!
+  timestamp: DateTime!
+  isRead: Boolean!
+}
+
+type Query {
+  getMessages(sender_id: String!, receiver_id: String!): [PersistenceMessage!]!
+  getAnonymousMessages(sender_id: String!, receiver_id: String!): [Message!]!
+}
+
+type Mutation {
+  sendMessage(createMessageInput: CreatePersistenceMessageInput!): PersistenceMessage!
+  markAsRead(messageId: Float!): PersistenceMessage!
+  loginUser(userId: String!, partnerId: String!): Boolean!
+  sendAnonymousMessage(createMessageInput: CreateMessageInput!): Message!
+  markAnonymousMessageAsRead(messageId: Float!): Message!
+  loginAnonymousUser(userId: String!, partnerId: String!): Boolean!
+  logoutAnonymousUser(userId: String!): Boolean!
+}
+
+input CreatePersistenceMessageInput {
+  sender_id: String!
+  receiver_id: String!
+  content: String!
+}
+
+input CreateMessageInput {
+  sender_id: String!
+  receiver_id: String!
+  content: String!
+}
+
+type Subscription {
+  messageSent(sender_id: String!, receiver_id: String!): PersistenceMessage!
+  messageRead(sender_id: String!, receiver_id: String!): PersistenceMessage!
+  anonymousMessageSent(sender_id: String!, receiver_id: String!): Message!
+  anonymousMessageRead(sender_id: String!, receiver_id: String!): Message!
+  anonymousUserLoggedOut(userId: String!): String!
+}
